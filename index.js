@@ -86,3 +86,27 @@ function analizarRespuesta(respuesta) {
     recomendacion
   };
 }
+
+// ================== RUTA DE PRUEBA ==================
+app.get("/", (req, res) => {
+  res.send("✅ API privada corriendo correctamente en Render");
+});
+
+// ================== RUTA PROTEGIDA DE ANÁLISIS ==================
+app.post("/api/analizar", verificarToken, (req, res) => {
+  const { respuesta } = req.body;
+
+  if (!respuesta) {
+    return res.status(400).json({ error: "Falta el campo 'respuesta' en el cuerpo de la solicitud" });
+  }
+
+  const resultado = analizarRespuesta(respuesta);
+  res.json(resultado);
+});
+
+// ================== INICIO DEL SERVIDOR ==================
+app.listen(PORT, () => {
+  console.log(`✅ Servidor escuchando en puerto ${PORT}`);
+}).on("error", (err) => {
+  console.error("❌ Error al iniciar servidor:", err);
+});
