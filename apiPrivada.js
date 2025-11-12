@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const PORT = 4001;
+const PORT = process.env.PORT || 4001;
 const PRIVATE_TOKEN = "mi_token_super_privado"; // Token fijo para acceso privado
 
 // Middleware para verificar el token del header
@@ -83,5 +83,4 @@ app.post("/api/analizar", verificarToken, (req, res) => {
 // Iniciar servidor
 app.listen(PORT, () => {
   console.log(`✅ API privada corriendo en http://localhost:${PORT}`);
-  console.log(`Usa el token: ${PRIVATE_TOKEN}`);
 });
